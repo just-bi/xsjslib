@@ -25,7 +25,7 @@
 	*	@param methods {object} An object that maps HTTP methods (keys) to functions (values)
 	*	@return {scalar} the value returned by the handler
 	*/
-	function handleRequest(methods, paramDefinitions){
+	function setHandlers(methods, paramDefinitions){
 		try {
 			var method = $.request.headers.get('~request_method').toUpperCase();
 			var handler = getHandler(methods, method);
@@ -35,8 +35,6 @@
 				Params.define(paramDefinitions);
 				args = Params.validate(method);
 			}
-			else
-				args = {};
 			
 			return handler(args);
 		}
@@ -44,11 +42,11 @@
 			if ($.response.status == $.net.http.OK) {			
 				$.response.status = $.net.http.BAD_REQUEST;
 				$.response.contentType = "text/plain";
-				$.response.setBody(e.toString());
+				$.response.setBody(e.toString() + e.stack);
 			}
 		}				
 	}
 	
-	exports.handleRequest = handleRequest;
+	exports.setHandlers = setHandlers;
 	
 })(this);

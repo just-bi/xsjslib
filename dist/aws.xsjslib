@@ -1,7 +1,6 @@
 (function(exports){
 	
 	var Error 	= $.import("error.xsjslib");
-	var Time 	= $.import('time.xsjslib');
 	
 	var AWS = {
 		config: {
